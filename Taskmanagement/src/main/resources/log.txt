@@ -1,0 +1,22 @@
+2026-01-14T21:56:17.385+07:00  INFO 30212 --- [Taskmanagement] [           main] c.e.T.TaskmanagementApplication          : Starting TaskmanagementApplication using Java 21.0.8 with PID 30212 (C:\Users\xuanh\Downloads\Taskmanagement\Taskmanagement\target\classes started by xuanh in C:\Users\xuanh\Downloads\Taskmanagement)
+2026-01-14T21:56:17.389+07:00  INFO 30212 --- [Taskmanagement] [           main] c.e.T.TaskmanagementApplication          : No active profile set, falling back to 1 default profile: "default"
+2026-01-14T21:56:18.372+07:00  INFO 30212 --- [Taskmanagement] [           main] c.e.T.TaskmanagementApplication          : Started TaskmanagementApplication in 1.995 seconds (process running for 3.138)
+--- ADD TASK ---
+Task added: Java
+
+--- ASSIGN TASK ---
+Task assigned to user: hai
+
+--- UPDATE TASK ---
+Task updated, status: DONE
+
+--- DELETE TASK ---
+Task deleted
+
+--- TEST LOGIC ERROR (NULL) ---
+ERROR: Task not Found !!
+
+--- TEST LOGIC ERROR (DUPLICATE) ---
+ERROR: Duplicate Task ID !!
+
+Process finished with exit code 0
