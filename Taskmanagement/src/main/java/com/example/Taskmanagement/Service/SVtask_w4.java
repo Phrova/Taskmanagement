@@ -122,15 +122,20 @@ public class SVtask_w4 {
         User user = userRepo.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
 
-
         if (task.getStatus() == TaskStatus.DONE) {
             throw new RuntimeException("Cannot assign user to a DONE task");
         }
 
 
         if (task.getProject() != null) {
-            boolean userInProject = task.getProject().getUsers().stream()
+
+            Project project = projectRepo.findById(task.getProject().getId())
+                    .orElseThrow(() -> new RuntimeException("Project not found"));
+
+
+            boolean userInProject = project.getUsers().stream()
                     .anyMatch(u -> u.getId().equals(userId));
+
             if (!userInProject) {
                 throw new RuntimeException("User does not belong to the project of this task");
             }
