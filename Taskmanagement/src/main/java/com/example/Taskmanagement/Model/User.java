@@ -1,12 +1,9 @@
 package com.example.Taskmanagement.Model;
 
-import com.example.Taskmanagement.Enum.UserRole;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -24,11 +21,11 @@ public class User {
     private Long id;
 
     private String username;
-    private String password;
-    private String email;
 
-    @Column(name = "user_role")
-    private String userRole;
+    @JsonIgnore
+    private String password;
+
+    private String email;
 
     @OneToMany(mappedBy = "user")
     @JsonIgnoreProperties("user")
@@ -42,4 +39,12 @@ public class User {
     )
     @JsonIgnoreProperties("users")
     private List<Project> projects;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private List<Role> roles;
 }

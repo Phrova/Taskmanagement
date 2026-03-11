@@ -1,9 +1,11 @@
 package com.example.Taskmanagement.RController;
 
+import com.example.Taskmanagement.DTO.ResApi;
 import com.example.Taskmanagement.DTO.TaskDTO;
 import com.example.Taskmanagement.Enum.TaskStatus;
 import com.example.Taskmanagement.Model.Task;
 import com.example.Taskmanagement.Service.SVtask_w4;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,48 +21,65 @@ public class RCLtask {
     private final SVtask_w4 sv;
 
     @PostMapping
-    public ResponseEntity<TaskDTO> createTask(@RequestBody TaskDTO taskDTO) {
+    public ResponseEntity<ResApi<TaskDTO>> createTask(@Valid @RequestBody TaskDTO taskDTO) {
         TaskDTO created = sv.createTask(taskDTO);
-        return new ResponseEntity<>(created, HttpStatus.CREATED);
+        ResApi<TaskDTO> response = new ResApi<>(201, "Task created successfully", created);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public List<Task> getAll() {
-        return sv.getAll();
+    public ResponseEntity<ResApi<List<Task>>> getAll() {
+        List<Task> tasks = sv.getAll();
+        ResApi<List<Task>> response = new ResApi<>(200, "Success", tasks);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
-    public Task getById(@PathVariable Long id) {
-        return sv.getById(id);
+    public ResponseEntity<ResApi<Task>> getById(@PathVariable Long id) {
+        Task task = sv.getById(id);
+        ResApi<Task> response = new ResApi<>(200, "Success", task);
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("/{id}")
-    public Task update(@PathVariable Long id, @RequestBody Task task) {
-        return sv.update(id, task);
+    public ResponseEntity<ResApi<Task>> update(@PathVariable Long id, @RequestBody Task task) {
+        Task updated = sv.update(id, task);
+        ResApi<Task> response = new ResApi<>(200, "Task updated successfully", updated);
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity<ResApi<Void>> delete(@PathVariable Long id) {
         sv.delete(id);
+        ResApi<Void> response = new ResApi<>(200, "Task deleted successfully", null);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/user/{userId}")
-    public List<Task> getByUser(@PathVariable Long userId) {
-        return sv.getByUserId(userId);
+    public ResponseEntity<ResApi<List<Task>>> getByUser(@PathVariable Long userId) {
+        List<Task> tasks = sv.getByUserId(userId);
+        ResApi<List<Task>> response = new ResApi<>(200, "Success", tasks);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/project/{projectId}")
-    public List<Task> getByProject(@PathVariable Long projectId) {
-        return sv.getByProjectId(projectId);
+    public ResponseEntity<ResApi<List<Task>>> getByProject(@PathVariable Long projectId) {
+        List<Task> tasks = sv.getByProjectId(projectId);
+        ResApi<List<Task>> response = new ResApi<>(200, "Success", tasks);
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("/{taskId}/assign/{userId}")
-    public TaskDTO assignTaskToUser(@PathVariable Long taskId, @PathVariable Long userId) {
-        return sv.assignTaskToUser(taskId, userId);
+    public ResponseEntity<ResApi<TaskDTO>> assignTaskToUser(@PathVariable Long taskId, @PathVariable Long userId) {
+        TaskDTO updated = sv.assignTaskToUser(taskId, userId);
+        ResApi<TaskDTO> response = new ResApi<>(200, "User assigned successfully", updated);
+        return ResponseEntity.ok(response);
     }
 
     @PatchMapping("/{taskId}/status")
-    public TaskDTO updateTaskStatus(@PathVariable Long taskId, @RequestParam TaskStatus status) {
-        return sv.updateTaskStatus(taskId, status);
+    public ResponseEntity<ResApi<TaskDTO>> updateTaskStatus(@PathVariable Long taskId, @RequestParam TaskStatus status) {
+        TaskDTO updated = sv.updateTaskStatus(taskId, status);
+        ResApi<TaskDTO> response = new ResApi<>(200, "Status updated successfully", updated);
+        return ResponseEntity.ok(response);
     }
 }
