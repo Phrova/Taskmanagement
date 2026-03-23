@@ -29,6 +29,14 @@ public class SVuser_w3 {
     }
 
     public User create(User user) {
+        if (user.getPassword() != null && !user.getPassword().isEmpty()) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+
+        Role userRole = roleRepo.findByName("USER")
+                .orElseThrow(() -> new RuntimeException("Role USER not found"));
+        user.setRoles(List.of(userRole));
+
         return userRepo.save(user);
     }
 
@@ -44,6 +52,11 @@ public class SVuser_w3 {
     }
 
     public void delete(Long id) {
+        User user = getbyId(id);
+
+        user.getTasks().forEach(task -> task.setUser(null));
+        userRepo.save(user);
+
         userRepo.deleteById(id);
     }
 

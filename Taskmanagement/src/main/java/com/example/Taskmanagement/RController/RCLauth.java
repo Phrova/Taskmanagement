@@ -5,6 +5,10 @@ import com.example.Taskmanagement.DTO.ReqLogin;
 import com.example.Taskmanagement.DTO.ResToken;
 import com.example.Taskmanagement.Security.CusUserDetail;
 import com.example.Taskmanagement.Security.JwtUtil;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,12 +20,18 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
+@Tag(name = "Authentication", description = "Login API")
 public class RCLauth {
 
     @Autowired private AuthenticationManager authManager;
     @Autowired private JwtUtil jwtUtil;
 
     @PostMapping("/login")
+    @Operation(summary = "Login with email & password", description = "Returns JWT token if credentials are valid")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Login successful"),
+            @ApiResponse(responseCode = "401", description = "Invalid email or password")
+    })
     public ResponseEntity<ResApi<ResToken>> login(@RequestBody ReqLogin req) {
         try {
             Authentication auth = authManager.authenticate(

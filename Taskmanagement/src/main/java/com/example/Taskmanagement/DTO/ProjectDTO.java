@@ -1,10 +1,8 @@
 package com.example.Taskmanagement.DTO;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+import lombok.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,4 +13,6 @@ public class ProjectDTO {
     private String name;
     private String description;
     private LocalDate createDate;
+    private List<Long> userIds;
+    private int memberCount;
 }

@@ -1,5 +1,6 @@
 package com.example.Taskmanagement.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,6 +23,7 @@ public class Role {
 
     private String description;
 
-    @ManyToMany(mappedBy = "roles")
+    @ManyToMany(mappedBy = "roles") //Avoid inf
+    @JsonIgnore
     private List<User> users;
 }

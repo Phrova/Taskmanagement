@@ -14,8 +14,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
+
 import com.example.Taskmanagement.Security.SecurityUtil;
 import com.example.Taskmanagement.Security.CusUserDetail;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -139,8 +142,10 @@ public class SVtask_w4 {
         return repo.findByProject_Id(projectId);
     }
 
+    @Transactional
     public TaskDTO assignTaskToUser(Long taskId, Long userId) {
-        Task task = getById(taskId);
+        Task task = repo.findById(taskId)
+                .orElseThrow(() -> new CSresourceNotfound("Task not found with id: " + taskId));
         User user = userRepo.findById(userId)
                 .orElseThrow(() -> new CSresourceNotfound("User not found with id: " + userId));
 
@@ -148,10 +153,11 @@ public class SVtask_w4 {
             throw new CSVDexception("Cannot assign user to a DONE task");
         }
 
-
         if (task.getProject() != null) {
             Project project = projectRepo.findById(task.getProject().getId())
                     .orElseThrow(() -> new CSresourceNotfound("Project not found"));
+
+            project.getUsers().size();
 
             boolean userInProject = project.getUsers().stream()
                     .anyMatch(u -> u.getId().equals(userId));
