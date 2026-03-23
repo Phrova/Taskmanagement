@@ -1,0 +1,7 @@
+1 - Designed a real database with relationships (User, Task, Project)
+2 - Built a full REST API with Spring Boot
+3 - Implemented JWT authentication & role-based authorization (USER/MANAGER)
+4 - Validated input, handled exceptions globally
+5 - Wrote unit tests with Mockito
+6 - Pocumented API with Swagger
+7 - Learned Git workflow and project structure

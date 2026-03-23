@@ -1,0 +1,20 @@
+CHECKLIST
+
+Task
+- title: required, can't be empty, 3-100 characters
+- description: optional, max 500 characters if provided
+- status: required, must be TODO, IN_PROGRESS, or DONE
+- dueDate: optional, but if set it must be same day or after today when creating
+- userId: optional, but if set the user must exist and belong to the task's project
+- projectId: optional, but if set the project must exist
+
+User
+- username: required, can't be empty, 3-50 characters
+- email: required, must be valid email format, must be unique
+- password: required, 6-100 characters (stored as BCrypt hash)
+- role: required, must be USER or MANAGER
+
+Project
+- name: required, can't be empty, 3-100 characters
+- description: max 500 characters
+- createDate: required, auto-generate
