@@ -1,0 +1,20 @@
+System: Task Management
+
+Entities:
+- Task (ID, Title, Description, Status, Create date, Due date)
+- User (ID, Username, Password, Email, Role)
+- Project (ID, Name, Description, Create date)
+
+Enum:
+- TaskStatus (TODO, IN_PROGRESS, DONE)
+- UserRole (USER, MANAGER)
+
+Business Rules:
+- A task can be assigned to one user or no one
+- A user can have many tasks
+- A project can have many tasks
+- A task can belong to one project or no project
+- A user can join multiple projects
+- A project can have multiple users
+- All required fields cannot be null
+- Email must be unique and in a valid email format
